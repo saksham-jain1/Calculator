@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<script>
+    
+    function backspace()
+    {
+        let str=document.getElementById('display').innerHTML;
+        document.getElementById('display').innerHTML=str.substring(0, str.length - 1);
+    }
+    function create_eq(e)
+    {
+        let str=document.getElementById('display').innerHTML;
+        if((e==='+' || e==='-' || e==='*' || e==='/' || e==='.') && (str[str.length-1]==='+' || str[str.length-1]==='-' || str[str.length-1]==='*' || str[str.length-1]==='/' || str[str.length-1]==='.') )
+        {
+            backspace();
+            document.getElementById('display').innerHTML+=e;
+        }
+        else
+        {
+            document.getElementById('display').innerHTML+=e;
+        }
+    }
+    function result()
+    {
+        let eq=document.getElementById('display').innerHTML;
+        eq1='';
+        for(let i in eq)
+        {
+            if('('===eq[i] && '0123456789('.indexOf(eq[i-1])>=0)
+            {
+                console.log(eq[i]+'1');
+                eq1+='*'+eq[i];
+            }
+            else if(')'===eq[i] && '0123456789()'.indexOf(eq[i*1+1])>=0)
+            {
+                console.log(eq[i]+'2');
+                eq1+=eq[i]+'*';
+            }
+            else
+            {
+                console.log(eq[i]+'3');
+                eq1+=eq[i];
+            }
+            
+        }
+        console.log(eq1);
+        try {
+            document.getElementById('display').innerHTML=eval(eq1); 
+        } catch (e) {
+            if (e instanceof SyntaxError) {
+                alert(e.message);
+            }
+            else
+            {
+                alert("Invalid Syntax Error");
+            }
+        }
+    }
+</script>
+<body>
+    <div class="container">
+        <div id="display" class="display">8(6-9)(8*9-6)</div>
+            <button class="btn" onclick="document.getElementById('display').innerHTML=' '" style="align-self: flex-end;margin-right: 30px;">Clear</button>
+            <button class="btn" onclick="backspace()" style="align-self: flex-end;margin-right: 30px;">Bksp</button>
+        <div class="btn_container">
+            <button class="btn" onclick="create_eq('**')">pow</button>
+            <button class="btn" onclick="create_eq('(')">(</button>
+            <button class="btn" onclick="create_eq(')')">)</button>
+            <button class="btn" onclick="create_eq('')"></button>
+            <button class="btn" onclick="create_eq(7)">7</button>
+            <button class="btn" onclick="create_eq(8)">8</button>
+            <button class="btn" onclick="create_eq(9)">9</button>
+            <button class="btn" onclick="create_eq('+')">+</button>
+            <button class="btn" onclick="create_eq(4)">4</button>
+            <button class="btn" onclick="create_eq(5)">5</button>
+            <button class="btn" onclick="create_eq(6)">6</button>
+            <button class="btn" onclick="create_eq('-')">-</button>
+            <button class="btn" onclick="create_eq(1)">1</button>
+            <button class="btn" onclick="create_eq(2)">2</button>
+            <button class="btn" onclick="create_eq(3)">3</button>
+            <button class="btn" onclick="create_eq('*')">*</button>
+            <button class="btn" onclick="create_eq('.')">.</button>
+            <button class="btn" onclick="create_eq(0)">0</button>
+            <button class="btn" onclick="create_eq('/')">/</button>
+            <button class="btn" onclick="result()">=</button>
+    </div>
+    </div>
+</body>
+</html>
